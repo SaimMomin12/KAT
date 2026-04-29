@@ -64,7 +64,7 @@ class HistKmerSpectraAnalysis(SpectraAnalysis):
 		print("--------------")
 		print()
 
-		if len(self.spectra.peaks) == 0:
+		if not self.spectra.peaks:
 			print("No peaks in K-mer frequency histogram.  Not plotting.")
 		else:
 			print("Plotting K-mer frequency distributions ... ", end="", flush=True)
@@ -436,7 +436,7 @@ def main():
 		end = time.time()
 		print(("\n" if args.verbose else "done.  ") + "Time taken: ", '{0:.1f}'.format(end - start) + 's')
 		a.peak_stats(args.output_prefix)
-		if args.plot or args.output_prefix:
+		if a.spectra and a.spectra.peaks:
 			a.plot(xmax=args.freq_cutoff, to_screen=args.plot, file_prefix=args.output_prefix)
 	except Exception:
 		print("\nERROR\n-----", file=sys.stderr)
